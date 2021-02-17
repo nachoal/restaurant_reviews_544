@@ -8,6 +8,7 @@ class RestaurantsController < ApplicationController
 
   # GET /restaurants/1
   def show
+   @reviews = @restaurant.reviews
   end
 
   # GET /restaurants/new
@@ -43,6 +44,17 @@ class RestaurantsController < ApplicationController
   def destroy
     @restaurant.destroy
     redirect_to restaurants_url, notice: 'Restaurant was successfully destroyed.'
+  end
+
+  # GET /restaurants/top
+  def top
+    # display the restaurants with 5 stars
+    @restaurants = Restaurant.where(stars: 5)
+  end
+
+  # GET /restaurants/:id/chef
+  def chef
+    @chef_name = Restaurant.find(params[:id]).chef_name
   end
 
   private
